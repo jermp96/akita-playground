@@ -1,10 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Store, StoreConfig } from "@datorama/akita";
-
-export interface DaybookState {
-  isLoading: boolean;
-  entries: Array<Entry>
-}
+import { EntityState, EntityStore, Store, StoreConfig } from "@datorama/akita";
 
 export interface Entry {
   id?: string;
@@ -12,16 +7,19 @@ export interface Entry {
   text: string;
 }
 
+export interface DaybookState extends EntityState<Entry, string> {
+  isLoading: boolean;
+}
+
 export const createInitialState = (): DaybookState => {
   return{
     isLoading: true,
-    entries: []
   }
 }
 
 @Injectable({providedIn: 'root'})
 @StoreConfig({name: 'daybook'})
-export class DaybookStore extends Store<DaybookState> {
+export class DaybookStore extends EntityStore<DaybookState> {
   constructor(){
     super(createInitialState())
   }

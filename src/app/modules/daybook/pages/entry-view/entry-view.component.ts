@@ -2,9 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { DaybookQuery } from '../../state/daybook.query';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import getDayMonthYear from '../../helpers/getDayMonthYear';
 import { Entry } from '../../state/daybook.store';
+import { tap } from 'rxjs';
+import { DaybookService } from '../../state/daybook.service';
 
 @Component({
   standalone: true,
@@ -20,7 +22,9 @@ import { Entry } from '../../state/daybook.store';
 export class EntryViewComponent implements OnInit {
 
   private daybookQuery = inject(DaybookQuery);
+  private daybookService = inject(DaybookService);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   public entryDate: {day: number, month: string, yearDay: string} | null = null;
   public entryForm: FormGroup | null = null;
@@ -56,18 +60,26 @@ export class EntryViewComponent implements OnInit {
     }
 
     if(entryId !== 'new') {
-      this.daybookQuery.entryById(entryId)?.subscribe({
+      this.daybookQuery.entryById(entryId)
+      .pipe( tap((val) => console.log(val)))
+      .subscribe({
         next: (entry) => {
-          if(entry) {
+          if(entry !== undefined) {
             this.entry = entry;
             this.entryForm?.patchValue({
               date: entry.date,
               text: entry.text
             });
             this.entryDate = getDayMonthYear(entry.date);
+          } else {
+            this.router.navigate(['/daybook/no-entry-selected'])
           }
         }
       });
     }
+  }
+
+  onSubmit(): void {
+    this.daybookService.createEntry(this.entryForm?.value as Entry);
   }
 }

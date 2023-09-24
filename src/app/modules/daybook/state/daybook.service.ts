@@ -3,12 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { DaybookStore, Entry } from './daybook.store';
 import { environment } from 'src/environments/environment';
 import { filter } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class DaybookService {
+  private baseUrl = environment.apiUrl;
+  
   private httpClient = inject(HttpClient);
   private daybookStore = inject(DaybookStore);
-  private baseUrl = environment.apiUrl;
+  private router = inject(Router);
+  
 
   constructor() { }
   
@@ -25,8 +29,24 @@ export class DaybookService {
             entries.push(entry)
           }
         }
-        this.daybookStore.update({entries})
+        this.daybookStore.add([...entries])
       }
     });
+  }
+
+  createEntry(payload: Entry): void {
+    this.httpClient.post(`${this.baseUrl}/entries.json`, payload)
+      .subscribe({
+        next: (data: any) => {
+          if(data) {
+            payload = {id: data.name, ...payload};
+            this.daybookStore.add(payload, {prepend: true});
+            this.router.navigate(['/daybook', payload.id]);
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      })
   }
 }

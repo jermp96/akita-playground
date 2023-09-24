@@ -7,6 +7,16 @@ export const DaybookRouting: Routes = [
     component: DaybookLayoutComponent,
     children: [
       {
+        path: '',
+        loadComponent: () => import('./pages/no-entry-selected/no-entry-selected.component')
+          .then(mod => mod.NoEntrySelectedComponent)
+      },
+      {
+        path: 'no-entry-selected',
+        loadComponent: () => import('./pages/no-entry-selected/no-entry-selected.component')
+          .then(mod => mod.NoEntrySelectedComponent)
+      },
+      {
         path: ':id',
         loadComponent: () => import('./pages/entry-view/entry-view.component')
           .then(mod => mod.EntryViewComponent)
