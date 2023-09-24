@@ -1,0 +1,10 @@
+<ng-container *ngIf="entry && entryDate">
+  <div class="entry-container cursor-pointer mb-3 p-2">
+    <div class="is-flex">
+      <span class="has-text-success fs-5 fw-bold">{{entryDate.day}}</span>
+      <span class="mx-1 is-size-5">{{ entryDate.month }}</span>
+      <span class="mx-2 has-text-weight-light">{{ entryDate.yearDay }}</span>
+    </div>
+    <div class="entry-description">{{shorText}}</div>
+  </div>
+</ng-container>

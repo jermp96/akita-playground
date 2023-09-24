@@ -12,6 +12,8 @@ export class DaybookQuery extends Query<DaybookState> {
   entriesByTerm(term?: string): Observable<Array<Entry>> {
     return (!term || term.length === 0) 
     ? this.select(state => state.entries)
-    : this.select(state => state.entries.filter(e => e.text.toLowerCase().includes(term!.toLowerCase())))
+    : this.select(state => state.entries.filter(
+      e => e.text.toLowerCase().includes(term!.toLowerCase())
+      ))
   }
 }

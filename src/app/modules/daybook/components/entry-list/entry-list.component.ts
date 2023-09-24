@@ -1,21 +1,33 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { DaybookQuery } from '../../state/daybook.query';
+import { EntryComponent } from '../entry/entry.component';
+import { CommonModule } from '@angular/common';
+import { Entry } from '../../state/daybook.store';
 
+const COMPONENTS = [EntryComponent];
 @Component({
   standalone: true,
   selector: 'entry-list',
-  templateUrl: './entry-list.component.html'
+  imports: [
+    CommonModule,
+    ...COMPONENTS
+  ],
+  templateUrl: './entry-list.component.html',
+  styleUrls: ['./entry-list.component.scss']
 })
 
 export class EntryListComponent implements OnInit {
-  daybookQuery = inject(DaybookQuery);
+  
+  private daybookQuery = inject(DaybookQuery);
+
+  public entries: Array<Entry> = [];
 
   constructor() { }
 
   ngOnInit() {
     this.daybookQuery.entriesByTerm().subscribe({
       next: (entries) => {
-        console.log(entries);
+        this.entries = entries;
       }
     })
   }

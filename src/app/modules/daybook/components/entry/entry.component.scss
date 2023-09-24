@@ -1,0 +1,12 @@
+.entry-container{
+  transition: 0.2s all ease-in;
+  border-radius: 5px;
+  &:hover{
+    background-color: lighten($color: grey, $amount: 45);
+    transition: 0.2s all ease-in;
+  }
+
+  .entry-description{
+    font-size: 12px;
+  }
+}

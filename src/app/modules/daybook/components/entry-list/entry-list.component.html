@@ -1,1 +1,20 @@
-<h1>Entry list</h1>
+<div class="entry-list-container box">
+  <div class="px-2 pt-2">
+    <div class="control">
+      <input class="input" type="text" placeholder="Text input">
+    </div>
+  </div>
+  <div class="mt-2 is-flex is-flex-direction-column">
+    <button class="button is-primary mx-3 mb-3">New Entry</button>
+    <div class="entry-scrollarea">
+      <ng-container *ngIf="entries && entries.length > 0 ;else noEntries">
+        <ng-container *ngFor="let entry of entries">
+          <entry [entry]="entry"/>
+        </ng-container>
+      </ng-container>
+      <ng-template #noEntries>
+        <p>No entries</p>
+      </ng-template>
+    </div>
+  </div>
+</div>
