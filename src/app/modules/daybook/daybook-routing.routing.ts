@@ -5,5 +5,12 @@ export const DaybookRouting: Routes = [
   {
     path: 'daybook',
     component: DaybookLayoutComponent,
+    children: [
+      {
+        path: ':id',
+        loadComponent: () => import('./pages/entry-view/entry-view.component')
+          .then(mod => mod.EntryViewComponent)
+      }
+    ]
   }
 ];

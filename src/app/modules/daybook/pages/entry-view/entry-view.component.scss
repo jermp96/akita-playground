@@ -1,0 +1,8 @@
+textarea{
+  font-size: 20px;
+  border: none;
+  height: 100%;
+  &:focus{
+    outline: none;
+  }
+}

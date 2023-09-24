@@ -1,10 +1,11 @@
 import { Query } from "@datorama/akita";
 import { DaybookState, DaybookStore, Entry } from "./daybook.store";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class DaybookQuery extends Query<DaybookState> {
+
   constructor(protected override store: DaybookStore) {
     super(store)
   }
@@ -15,5 +16,10 @@ export class DaybookQuery extends Query<DaybookState> {
     : this.select(state => state.entries.filter(
       e => e.text.toLowerCase().includes(term!.toLowerCase())
       ))
+  }
+
+  entryById(id: string): Observable<Entry> | null {
+    const entry = this.getValue().entries.find((entry) => entry.id === id);
+    return (entry) ? of(entry) : null;
   }
 }

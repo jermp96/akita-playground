@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="mt-2 is-flex is-flex-direction-column">
-    <button class="button is-primary mx-3 mb-3">New Entry</button>
+    <button (click)="onNewEntry()" class="button is-primary mx-3 mb-3">New Entry</button>
     <div class="entry-scrollarea">
       <ng-container *ngIf="entries && entries.length > 0 ;else noEntries">
         <ng-container *ngFor="let entry of entries">

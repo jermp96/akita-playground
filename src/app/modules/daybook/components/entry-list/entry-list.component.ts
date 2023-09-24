@@ -3,6 +3,7 @@ import { DaybookQuery } from '../../state/daybook.query';
 import { EntryComponent } from '../entry/entry.component';
 import { CommonModule } from '@angular/common';
 import { Entry } from '../../state/daybook.store';
+import { Router } from '@angular/router';
 
 const COMPONENTS = [EntryComponent];
 @Component({
@@ -19,6 +20,7 @@ const COMPONENTS = [EntryComponent];
 export class EntryListComponent implements OnInit {
   
   private daybookQuery = inject(DaybookQuery);
+  private router = inject(Router);
 
   public entries: Array<Entry> = [];
 
@@ -30,5 +32,9 @@ export class EntryListComponent implements OnInit {
         this.entries = entries;
       }
     })
+  }
+
+  onNewEntry(): void {
+    this.router.navigate(['/daybook', 'new']);
   }
 }

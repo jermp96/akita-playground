@@ -1,0 +1,23 @@
+<ng-container *ngIf="entryForm">
+  <form [formGroup]="entryForm">
+    <div class="is-flex is-justify-content-space-between p-2">
+      <div *ngIf="entryDate">
+        <span class="has-text-success is-size-3 fw-bold">{{ entryDate.day }}</span>
+        <span class="mx-1 fs-3">{{ entryDate.month }}</span>
+        <span class="mx-2 fs-4 fw-light">{{ entryDate.yearDay }}</span>
+      </div>
+  
+      <div>
+        <button
+        *ngIf="entry && entry.id"
+        class="button is-danger is-inverted mx-2"><i class="lni lni-trash-can"></i></button>
+      </div>
+    </div>
+  
+    <hr>
+    
+    <div class="is-flex is-flex-direction-column px-3 h-75">
+      <textarea formControlName="text"  placeholder="Qué sucudió hoy?"></textarea>
+    </div>
+  </form>
+</ng-container>

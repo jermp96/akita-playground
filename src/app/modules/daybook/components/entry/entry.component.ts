@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { Entry } from '../../state/daybook.store';
-import getDayMonthYear from '../../helpers/getDayMonthYear';
 import { CommonModule } from '@angular/common';
+import getDayMonthYear from '../../helpers/getDayMonthYear';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -16,6 +17,8 @@ import { CommonModule } from '@angular/common';
 export class EntryComponent implements OnInit {
   @Input() entry: Entry | null = null;
 
+  private router = inject(Router);
+
   public entryDate: {day: number, month: string, yearDay: string} | null = null;
   public shorText = '';
 
@@ -28,5 +31,9 @@ export class EntryComponent implements OnInit {
       ? this.entry.text.substring(0, 130) + '...'
       : this.entry.text;
     }
+  }
+
+  goToEntry(): void {
+    this.router.navigate(['/daybook', this.entry?.id]);
   }
 }
