@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Store, StoreConfig } from "@datorama/akita";
 
 export interface DaybookState {
+  isLoading: boolean;
   entries: Array<Entry>
 }
 
@@ -13,6 +14,7 @@ export interface Entry {
 
 export const createInitialState = (): DaybookState => {
   return{
+    isLoading: true,
     entries: []
   }
 }
